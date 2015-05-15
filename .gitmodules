@@ -1,0 +1,6 @@
+[submodule "tools"]
+	path = tools
+	url = git@github.com:MrMoose/moose_tools.git
+[submodule "monty"]
+	path = monty
+	url = git@github.com:MrMoose/moose_monty_hall.git
