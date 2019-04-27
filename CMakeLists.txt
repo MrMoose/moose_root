@@ -10,10 +10,15 @@ cmake_policy(SET CMP0074 NEW)
 project(moose_root)
 
 enable_testing()
+
+# Some global setups for all platforms
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(MOOSE_STATIC_BUILD TRUE CACHE BOOL "Configure for static linkage. Mostly, except for Qt")
 
+# Set globally now
+set(CMAKE_CXX_STANDARD 14)
 
 set(TP $ENV{THIRD_PARTY_ROOT})
 if (NOT TP)
@@ -70,8 +75,14 @@ if (MSVC)
     set(CMAKE_C_FLAGS_DEBUG "${CFLAGS}")
     set(CMAKE_CXX_FLAGS_DEBUG "${CXXFLAGS}")
 
-    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} /DEBUG /INCREMENTAL")
+	# Add some more switches to try to speed up compile times
+	set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} /DEBUG:FASTLINK /INCREMENTAL")
+	set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO} /DEBUG:FASTLINK /INCREMENTAL")
 
+	# Use multiple cores. You can reduce the number in Tools -> Options -> Project Settings
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP /DNOMINMAX /DWIN32_LEAN_AND_MEAN")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /DNOMINMAX /DWIN32_LEAN_AND_MEAN")
+	
     # Turn off Boost's auto linking in order to link the now 'fake' debug against release boost
     add_definitions(-DBOOST_ALL_NO_LIB)
 else()
@@ -139,9 +150,9 @@ set(CMAKE_BUNDLE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bundle/$<CONFIG>)
 
 
 add_subdirectory(tools)
-add_subdirectory(monty)
+#add_subdirectory(monty)
 add_subdirectory(mredis)
-add_subdirectory(rescue)
+#add_subdirectory(rescue)
 
 
 
