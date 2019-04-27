@@ -10,6 +10,7 @@ cmake_policy(SET CMP0074 NEW)
 project(moose_root)
 
 enable_testing()
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(MOOSE_STATIC_BUILD TRUE CACHE BOOL "Configure for static linkage. Mostly, except for Qt")
 
@@ -38,10 +39,10 @@ endif()
 
 # Setup Boost Directories. 
 # The CMake Module appears to require that
-set(BOOST_ROOT ${THIRD_PARTY_ROOT}/boost-1.68.0 CACHE PATH "set root of boost install")
-set(BOOST_INCLUDEDIR ${BOOST_ROOT}/include CACHE PATH "set boost includes")
+set(BOOST_ROOT ${THIRD_PARTY_ROOT}/boost-1.70.0 CACHE PATH "set root of boost install")
+set(BOOST_INCLUDE_DIR ${BOOST_ROOT}/include CACHE PATH "set boost includes")
 set(BOOST_LIBRARYDIR ${BOOST_ROOT}/lib CACHE PATH "set boost library dir")
-set(Boost_ADDITIONAL_VERSIONS "1.68.0")
+set(Boost_ADDITIONAL_VERSIONS "1.70.0")
 
 # Boost specific settings for fake debug DLL runtime static libs
 set(Boost_USE_STATIC_LIBS           ON) # only find static libs
@@ -115,7 +116,6 @@ find_package(Threads)
 ####################################################################
 add_definitions(-DBOOST_MAJOR=${Boost_MAJOR_VERSION})
 add_definitions(-DBOOST_MINOR=${Boost_MINOR_VERSION})
-add_definitions(-DBOOST_THREAD_VERSION=3)
 add_definitions(-DSTAGE_SERVER_PREFIX="${STAGE_SERVER_PREFIX}")
 add_definitions(-DMOOSE_TOOLS_LOG_FILE_DIR="${STAGE_SERVER_PREFIX}/log")
 add_definitions(-DMOOSE_TOOLS_LOG_FILE_NAME="moose_tools.log")
@@ -125,8 +125,8 @@ if (MSVC)
     add_definitions(-D_WIN32_WINNT=0x0A00)
     add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 else()
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -DPIC -pthread")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -DPIC -pthread -std=c++11 -fvisibility=hidden")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -DPIC -pthread")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -DPIC -pthread -std=c++14 -fvisibility=hidden")
 endif()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>)
@@ -141,6 +141,7 @@ set(CMAKE_BUNDLE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bundle/$<CONFIG>)
 add_subdirectory(tools)
 add_subdirectory(monty)
 add_subdirectory(mredis)
+add_subdirectory(rescue)
 
 
 
