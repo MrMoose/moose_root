@@ -40,7 +40,7 @@ endif()
 # Setup Boost Directories. 
 # The CMake Module appears to require that
 set(BOOST_ROOT ${THIRD_PARTY_ROOT}/boost-1.70.0 CACHE PATH "set root of boost install")
-set(BOOST_INCLUDE_DIR ${BOOST_ROOT}/include CACHE PATH "set boost includes")
+set(BOOST_INCLUDEDIR ${BOOST_ROOT}/include CACHE PATH "set boost includes")
 set(BOOST_LIBRARYDIR ${BOOST_ROOT}/lib CACHE PATH "set boost library dir")
 set(Boost_ADDITIONAL_VERSIONS "1.70.0")
 
@@ -125,8 +125,8 @@ if (MSVC)
     add_definitions(-D_WIN32_WINNT=0x0A00)
     add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 else()
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -DPIC -pthread")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -DPIC -pthread -std=c++14 -fvisibility=hidden")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -pthread -std=c++14 -fvisibility=hidden")
 endif()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>)

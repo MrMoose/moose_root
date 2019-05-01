@@ -7,3 +7,6 @@
 [submodule "mredis"]
 	path = mredis
 	url = git@github.com:MrMoose/mredis.git
+[submodule "rescue"]
+	path = rescue
+	url = git@github.com:MrMoose/rescue.git
