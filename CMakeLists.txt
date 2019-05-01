@@ -152,7 +152,7 @@ set(CMAKE_BUNDLE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bundle/$<CONFIG>)
 add_subdirectory(tools)
 #add_subdirectory(monty)
 add_subdirectory(mredis)
-#add_subdirectory(rescue)
+add_subdirectory(rescue)
 
 
 
