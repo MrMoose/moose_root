@@ -127,8 +127,7 @@ find_package(Threads)
 ####################################################################
 add_definitions(-DBOOST_MAJOR=${Boost_MAJOR_VERSION})
 add_definitions(-DBOOST_MINOR=${Boost_MINOR_VERSION})
-add_definitions(-DSTAGE_SERVER_PREFIX="${STAGE_SERVER_PREFIX}")
-add_definitions(-DMOOSE_TOOLS_LOG_FILE_DIR="${STAGE_SERVER_PREFIX}/log")
+add_definitions(-DMOOSE_TOOLS_LOG_FILE_DIR="/var/log/moose")
 add_definitions(-DMOOSE_TOOLS_LOG_FILE_NAME="moose_tools.log")
 
 if (MSVC)
@@ -144,7 +143,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>)
 set(CMAKE_BUNDLE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bundle/$<CONFIG>)
-
 
 
 
